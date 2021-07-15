@@ -12,18 +12,18 @@
 
 import { mapGetters, mapActions } from 'vuex';
 export default {
-  name: 'index',
-  computed: {
-    ...mapGetters(['count'])
-  },
-  methods: {
-    ...mapActions([
-      'addCount'
-    ]),
-    add(){
-      this.addCount({num: 10});
+    name: 'index',
+    computed: {
+        ...mapGetters(['count'])
+    },
+    methods: {
+        ...mapActions([
+            'addCount'
+        ]),
+        add(){
+            this.addCount({num: 10});
+        }
     }
-  }
 
 };
 </script>

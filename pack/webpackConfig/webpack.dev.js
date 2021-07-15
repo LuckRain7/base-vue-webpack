@@ -1,7 +1,7 @@
-const path = require('path');
-const webpackBase = require('./webpack.base');
-const webpackMerge = require('webpack-merge');
-const config = require('./config');
+const path = require('../utils/path')
+const webpackBase = require('./webpack.base')
+const webpackMerge = require('webpack-merge')
+const config = require('./config')
 
 module.exports = webpackMerge(webpackBase, {
     mode: 'development',
@@ -22,8 +22,9 @@ module.exports = webpackMerge(webpackBase, {
                     'postcss-loader',
                     {
                         loader: 'sass-resources-loader',
+                        // 设置基础 scss 样式
                         options: {
-                            resources: path.resolve(__dirname, '../src/styles/lib/main.scss')
+                            resources: path.src('styles/main.scss')
                         }
                     }
                 ]
@@ -71,4 +72,4 @@ module.exports = webpackMerge(webpackBase, {
         },
         open: true // 服务启动后 打开浏览器
     }
-});
+})

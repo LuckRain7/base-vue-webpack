@@ -1,30 +1,38 @@
-let path = require('path')
-let bDev = process.env.NODE_ENV === 'development'
+/*
+ * Love and Peace
+ * 基础路径配置
+ */
 
-console.log(process.env.NODE_ENV, '')
+let path = require('path')
+let isDev = process.env.NODE_ENV === 'development'
 
 module.exports = {
-    isDev: bDev,
-    root(sPath = '') {
-        let sRoot = path.resolve(__dirname, '../..')
-        sPath && (sPath = (/^\.\//.test(sPath) ? '' : './') + sPath)
-        return path.resolve(sRoot, sPath)
+    isDev: isDev,
+    fixPath(_path) {
+        return _path && (_path = (/^\.\//.test(_path) ? '' : './') + _path)
     },
-    app(sPath = '') {
-        let that = this
-        return path.resolve(that.root('./app'), sPath)
+
+    // 设置项目 root 目录地址
+    root(_add_path_ = '') {
+        let _root = path.resolve(__dirname, '../..')
+        // 根据 root 目录向下进行拼接
+        // /^\.\//.test(_add_path_) 判断是否为 ./ 开头 默认都是 root 目录进行向下寻找
+        return path.resolve(_root, this.fixPath(_add_path_))
     },
-    src(sPath = '') {
-        let that = this
-        return path.resolve(that.app('./src'), sPath)
+
+    app(_path = '') {
+        return path.resolve(this.root('./app'), this.fixPath(_path))
     },
-    release(sPath = '') {
-        let that = this
-        return path.resolve(that.app('./release'), sPath)
+
+    src(_path = '') {
+        return path.resolve(this.app('./src'), this.fixPath(_path))
     },
-    pack(sPath = '') {
-        let that = this
-        let sRoot = that.root('./pack')
-        return path.resolve(sRoot, sPath)
+
+    release(_path = '') {
+        return path.resolve(this.app('./release'), this.fixPath(_path))
+    },
+
+    pack(_path = '') {
+        return path.resolve(this.root('./pack'), this.fixPath(_path))
     }
 }
