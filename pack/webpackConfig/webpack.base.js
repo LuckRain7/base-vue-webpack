@@ -8,6 +8,7 @@ const config = require('./config') // 多页面的配置项
 let HTMLPlugins = []
 let Entries = {}
 
+// 入口文件自动生成
 config.HTMLDirs.forEach(item => {
     let filename = `${item.page}.html`
     if (item.dir) filename = `${item.dir}/${item.page}.html`

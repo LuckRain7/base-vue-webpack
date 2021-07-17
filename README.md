@@ -1,3 +1,3 @@
 # base-vue-webpack
 
-xxx
+Webpack 构建的多页面 Vue 应用

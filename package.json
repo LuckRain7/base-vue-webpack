@@ -1,5 +1,5 @@
 {
-    "name": "my-webpack4-vue2",
+    "name": "base-vue-webpack",
     "version": "1.0.0",
     "description": "webpack4-vue2-multi-page",
     "main": "index.js",
@@ -29,6 +29,7 @@
         "eslint-plugin-vue": "^4.5.0",
         "file-loader": "^1.1.11",
         "friendly-errors-webpack-plugin": "^1.7.0",
+        "glob": "^7.1.7",
         "html-webpack-plugin": "^3.2.0",
         "http-server": "^0.11.1",
         "mini-css-extract-plugin": "^0.4.1",
