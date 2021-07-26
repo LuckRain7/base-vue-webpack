@@ -3,6 +3,8 @@ const HTMLWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
+const glob = require('glob')
+
 const path = require('../utils/path') // 提前预设的 path 路径
 const config = require('./config') // 多页面的配置项
 let HTMLPlugins = []
@@ -22,7 +24,16 @@ config.HTMLDirs.forEach(item => {
     Entries[item.page] = path.src(`/pages/${item.page}/index.js`) // 根据配置设置入口js文件
 })
 
-const env = process.env.BUILD_MODE.trim()
+let _entry = {}
+const mainEntryPathArray = glob.sync(path.src_pages('./**/main.entry.js'))
+const pagesPath = path.src_pages()
+mainEntryPathArray.forEach(mainEntryPath => {
+    const key = mainEntryPath.replace(pagesPath, '').replace(/\.js$/, '');
+    _entry[key] = [mainEntryPath] // ['公共css', mainEntryPath]
+})
+
+
+const env = process.env.NODE_ENV.trim()
 let ASSET_PATH = '/' // dev 环境
 if (env === 'prod') ASSET_PATH = '//abc.com/static/' // build 时设置成实际使用的静态服务地址
 
