@@ -24,14 +24,17 @@ config.HTMLDirs.forEach(item => {
     Entries[item.page] = path.src(`/pages/${item.page}/index.js`) // 根据配置设置入口js文件
 })
 
-let _entry = {}
-const mainEntryPathArray = glob.sync(path.src_pages('./**/main.entry.js'))
-const pagesPath = path.src_pages()
-mainEntryPathArray.forEach(mainEntryPath => {
-    const key = mainEntryPath.replace(pagesPath, '').replace(/\.js$/, '');
-    _entry[key] = [mainEntryPath] // ['公共css', mainEntryPath]
-})
-
+// 实现自动读取入口
+const getEntry = (() => {
+    let _entry = {}
+    const mainEntryPathArray = glob.sync(path.src_pages('./**/main.entry.js'))
+    const pagesPath = path.src_pages()
+    mainEntryPathArray.forEach(mainEntryPath => {
+        const key = mainEntryPath.replace(pagesPath, '').replace(/\.js$/, '')
+        _entry[key] = [mainEntryPath] // ['公共css', mainEntryPath]
+    })
+    return _entry
+})()
 
 const env = process.env.NODE_ENV.trim()
 let ASSET_PATH = '/' // dev 环境
